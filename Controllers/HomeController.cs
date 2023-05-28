@@ -8,8 +8,20 @@ namespace Todo_API_ASPNET.Controllers
     public class HomeController : ControllerBase
     {
         [HttpGet("/")]
-        public List<TodoModel> Get([FromServices] AppDbContext context) {
+        public List<TodoModel> Get([FromServices] AppDbContext context)
+        {
             return context.Todos.ToList();
+        }
+
+        [HttpPost("/")]
+        public TodoModel Post(
+                [FromBody] TodoModel todo,
+                [FromServices] AppDbContext context)
+        {
+
+            context.Todos.Add(todo);
+            context.SaveChanges();
+            return todo;
         }
     }
 }
